@@ -1,0 +1,28 @@
+{
+    "name": "colaphp/core",
+    "description": "",
+    "license": "MIT",
+    "keywords": ["php","colaphp","mvc"],
+    "type": "library",
+    "require": {
+        "php": ">=5.6",
+        "colaphp/utils": "~1.0"
+    },
+    "autoload": {
+        "files": [
+            "src/helper.php"
+        ],
+        "psr-4": {
+            "Colaphp\\Core\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "authors": [
+        {
+            "name": "nydia87",
+            "email": "349196713@qq.com"
+        }
+    ]
+}
