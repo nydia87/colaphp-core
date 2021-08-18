@@ -3,19 +3,18 @@
  * @contact  nydia87 <349196713@qq.com>
  * @license  http://www.apache.org/licenses/LICENSE-2.0
  */
-
 define('COLAPHP_CORE_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR); //框架目录
 define('COLAPHP_CORE_CONFIG', 'ColaphpCoreConfig'); //框架配置项名
 
 //项目中必须配置的路径
-$definedPaths = ['ROOT_PATH','APP_PATH'];
-foreach($definedPaths as $path){
-	if(!defined($path)){
+$definedPaths = ['ROOT_PATH', 'APP_PATH'];
+foreach ($definedPaths as $path) {
+	if (! defined($path)) {
 		$msg = "Your app need define path : {$path}";
-		if(PHP_SAPI == 'cli'){
+		if (PHP_SAPI == 'cli') {
 			echo $msg . PHP_EOL;
-		}else{
-			echo '<p style="padding:1em;border:solid 1px #E0E0E0;margin:10px 0;background:#FFD;line-height:100%;color:#2E2E2E;font-size:14px;">'.$msg.'</p>';
+		} else {
+			echo '<p style="padding:1em;border:solid 1px #E0E0E0;margin:10px 0;background:#FFD;line-height:100%;color:#2E2E2E;font-size:14px;">' . $msg . '</p>';
 		}
 		exit;
 	}
@@ -76,24 +75,24 @@ if (! function_exists('halt')) {
 
 if (! function_exists('getCoreLog')) {
 	/**
-	 * 获取全局Log
+	 * 获取全局Log.
 	 *
 	 * @return object
 	 */
-	function getCoreLog(){
+	function getCoreLog()
+	{
 		static $log;
-		if(!isset($log)){
+		if (! isset($log)) {
 			$log = new \Colaphp\Utils\Log();
-			$log->init(['path' => is_null(LOG_PATH) ? ROOT_PATH : LOG_PATH,'apart_level' => ['error']]);
+			$log->init(['path' => is_null(LOG_PATH) ? ROOT_PATH : LOG_PATH, 'apart_level' => ['error']]);
 		}
 		return $log;
 	}
-
 }
 
 if (! function_exists('loadClass')) {
 	/**
-	 * 调用项目类
+	 * 调用项目类.
 	 *
 	 * @param string $name 支持三或二级 group/action|model/class
 	 * @param string $psr4
@@ -105,29 +104,29 @@ if (! function_exists('loadClass')) {
 		if (isset($_class[$name])) {
 			return $_class[$name];
 		}
-		if(empty($name)){
+		if (empty($name)) {
 			return false;
 		}
-		$names = explode('/',$name);
+		$names = explode('/', $name);
 		if (count($names) == 3) {
 			$group = strtolower($names[0]);
 			$model = ucfirst($names[1]);
 			$action = $names[2];
-		}else if(count($names) == 2){
+		} elseif (count($names) == 2) {
 			$group = strtolower(GROUP_NAME);
 			$model = ucfirst($names[0]);
 			$action = $names[1];
-		}else{
+		} else {
 			return false;
 		}
-		$class = sprintf("\\%s\\%s\\%s\\%s",$psr4,$group,$model,$action);
+		$class = sprintf('\\%s\\%s\\%s\\%s', $psr4, $group, $model, $action);
 		$class = basename($class);
-		$file = ROOT_PATH . sprintf("/%s/%s/%s/%s",strtolower($psr4),$group,$model,$action) . $ext;
-		if(!is_file($file)){
+		$file = ROOT_PATH . sprintf('/%s/%s/%s/%s', strtolower($psr4), $group, $model, $action) . $ext;
+		if (! is_file($file)) {
 			return false;
 		}
 		include $file;
-		if(!class_exists($class,false)){
+		if (! class_exists($class, false)) {
 			return false;
 		}
 		$obj = new $class();

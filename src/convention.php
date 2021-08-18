@@ -12,7 +12,7 @@ if (! defined('COLAPHP_CORE_PATH')) {
 
 return [
 	/* 默认设定 */
-    'DEFAULT_GROUP_LIST' => 'Home,Admin', //分组列表
+	'DEFAULT_GROUP_LIST' => 'Home,Admin', //分组列表
 	'DEFAULT_GROUP' => 'Home',  // 默认分组
 	'DEFAULT_MODULE' => 'Index', // 默认模块名称
 	'DEFAULT_ACTION' => 'index', // 默认操作名称

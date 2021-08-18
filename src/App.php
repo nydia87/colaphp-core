@@ -24,11 +24,11 @@ class App
 		static::register();
 		//路由调度
 		static::dispatch();
-        //执行
-        static::exec();
-        //记录日志
-        $coreLog = getCoreLog();
-        $coreLog->save();
+		//执行
+		static::exec();
+		//记录日志
+		$coreLog = getCoreLog();
+		$coreLog->save();
 	}
 
 	/**
@@ -41,7 +41,7 @@ class App
 	 */
 	public static function appError($errno, $errstr, $errfile, $errline)
 	{
-        $coreLog = getCoreLog();
+		$coreLog = getCoreLog();
 		switch ($errno) {
 			case E_ERROR:
 			case E_USER_ERROR:
@@ -90,10 +90,10 @@ class App
 	private static function dispatch()
 	{
 		$config = config(COLAPHP_CORE_CONFIG);
-        if(!empty($_GET[$config['VAR_PATHINFO']])) { // 判断URL里面是否有兼容模式参数
-            $_SERVER['PATH_INFO']   = $_GET[$config['VAR_PATHINFO']];
-            unset($_GET[$config['VAR_PATHINFO']]);
-        }
+		if (! empty($_GET[$config['VAR_PATHINFO']])) { // 判断URL里面是否有兼容模式参数
+			$_SERVER['PATH_INFO'] = $_GET[$config['VAR_PATHINFO']];
+			unset($_GET[$config['VAR_PATHINFO']]);
+		}
 		// 分析PATHINFO信息
 		if (empty($_SERVER['PATH_INFO'])) {
 			$types = explode(',', $config['URL_PATHINFO_FETCH']);
@@ -121,7 +121,7 @@ class App
 			}
 			$var = [];
 			if (! isset($_GET[$config['VAR_GROUP']])) {
-                $grouplist = env('APP_GROUP_LIST') ? env('APP_GROUP_LIST') : $config['DEFAULT_GROUP_LIST'];
+				$grouplist = env('APP_GROUP_LIST') ? env('APP_GROUP_LIST') : $config['DEFAULT_GROUP_LIST'];
 				$var[$config['VAR_GROUP']] = in_array(strtolower($paths[0]), explode(',', strtolower($grouplist))) ? array_shift($paths) : '';
 			}
 			if (! isset($_GET[$config['VAR_MODULE']])) {// 还没有定义模块名称
@@ -130,7 +130,7 @@ class App
 			$var[$config['VAR_ACTION']] = array_shift($paths);
 
 			// 解析剩余的URL参数
-            preg_replace_callback('@(\w+)' . $depr . '([^' . $depr . '\/]+)@', function($res) use(&$var){ $var[$res[1]] = $res[2]; }, implode($depr, $paths));
+			preg_replace_callback('@(\w+)' . $depr . '([^' . $depr . '\/]+)@', function ($res) use (&$var) { $var[$res[1]] = $res[2]; }, implode($depr, $paths));
 
 			$_GET = array_merge($var, $_GET);
 		}
@@ -153,19 +153,18 @@ class App
 			$module = false;
 		} else {
 			//创建控制器实例
-			$module = loadClass(GROUP_NAME . '/' . 'controller'  . '/' . MODULE_NAME);
+			$module = loadClass(GROUP_NAME . '/' . 'controller' . '/' . MODULE_NAME);
 		}
 		if (! $module) {
-			halt('_CLASS_NOT_EXIST_ : '. GROUP_NAME . '~'  . MODULE_NAME);
+			halt('_CLASS_NOT_EXIST_ : ' . GROUP_NAME . '~' . MODULE_NAME);
 		}
 		//获取当前操作名
 		$action = ACTION_NAME;
-        if (!method_exists($module,$action)) {
+		if (! method_exists($module, $action)) {
 			halt('_ACTION_NOT_EXIST_ : ' . GROUP_NAME . '~' . MODULE_NAME . '~' . ACTION_NAME);
-        }
+		}
 		//执行当前操作
 		call_user_func([&$module, $action]);
-        return;
 	}
 
 	/**
