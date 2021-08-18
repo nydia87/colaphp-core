@@ -107,10 +107,11 @@ class View
 				$action = $names[0];
 			}
 		}
-		$path = APP_PATH . DIRECTORY_SEPARATOR . GROUP_NAME . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $action . '.php';
+		$file = DIRECTORY_SEPARATOR . GROUP_NAME . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $action . '.php';
+		$filepath = APP_PATH . $file;
 		// 模板文件不存在直接返回
-		if (! is_file($path)) {
-			halt('_TPL_NOT_EXIST_ : ' . $templateFile);
+		if (! is_file($filepath)) {
+			halt('_TPL_NOT_EXIST_ : ' . $file);
 		}
 		// 页面缓存
 		ob_start();
@@ -118,7 +119,7 @@ class View
 		// 模板阵列变量分解成为独立变量
 		extract($this->tVar, EXTR_OVERWRITE);
 		// 直接载入PHP模板
-		include $path;
+		include $filepath;
 		// 获取并清空缓存
 		$content = ob_get_clean();
 		// 输出模板文件
