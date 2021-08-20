@@ -22,6 +22,8 @@ class App
 		Config::load(COLAPHP_CORE_PATH . 'convention.php', COLAPHP_CORE_CONFIG);
 		//注册
 		static::register();
+		//启动配置
+		static::start();
 		//路由调度
 		static::dispatch();
 		//执行
@@ -82,6 +84,36 @@ class App
 		// 设定错误和异常处理
 		set_error_handler(['Colaphp\Core\App', 'appError']);
 		set_exception_handler(['Colaphp\Core\App', 'appException']);
+	}
+
+	/**
+	 * 启动配置.
+	 */
+	private static function start()
+	{
+		//项目中必须配置的路径
+		$paths = ['ROOT_PATH', 'APP_PATH'];
+		foreach ($paths as $path) {
+			if (! defined($path)) {
+				$msg = "Your App need define path : {$path}";
+				dump($msg);
+				exit;
+			}
+		}
+		//session配置
+		$config = [];
+		$keys = getSessionKeys();
+		foreach ($keys as $k) {
+			$val = env("session.{$k}");
+			if (! empty($val)) {
+				$config[$k] = $val;
+			}
+		}
+		$config = ! empty($config) ? $config : [
+			'prefix' => 'COLAPHP',
+			'auto_start' => true,
+		];
+		session($config);
 	}
 
 	/**

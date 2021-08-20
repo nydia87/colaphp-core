@@ -4,21 +4,7 @@
  * @license  http://www.apache.org/licenses/LICENSE-2.0
  */
 define('COLAPHP_CORE_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR); //框架目录
-define('COLAPHP_CORE_CONFIG', 'ColaphpCoreConfig'); //框架配置项名
-
-//项目中必须配置的路径
-$definedPaths = ['ROOT_PATH', 'APP_PATH'];
-foreach ($definedPaths as $path) {
-	if (! defined($path)) {
-		$msg = "Your app need define path : {$path}";
-		if (PHP_SAPI == 'cli') {
-			echo $msg . PHP_EOL;
-		} else {
-			echo '<p style="padding:1em;border:solid 1px #E0E0E0;margin:10px 0;background:#FFD;line-height:100%;color:#2E2E2E;font-size:14px;">' . $msg . '</p>';
-		}
-		exit;
-	}
-}
+define('COLAPHP_CORE_CONFIG', 'COLAPHPCONFIG'); //框架配置项名
 
 if (! function_exists('halt')) {
 	/**

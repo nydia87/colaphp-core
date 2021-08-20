@@ -107,7 +107,7 @@ class View
 				$action = $names[0];
 			}
 		}
-		$file = DIRECTORY_SEPARATOR . GROUP_NAME . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $action . '.php';
+		$file = DIRECTORY_SEPARATOR . GROUP_NAME . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $action . '.php';
 		$filepath = APP_PATH . $file;
 		// 模板文件不存在直接返回
 		if (! is_file($filepath)) {

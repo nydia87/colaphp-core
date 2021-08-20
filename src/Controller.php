@@ -11,9 +11,15 @@ namespace Colaphp\Core;
 class Controller
 {
 	/**
+	 * 请求对象
+	 * @var object
+	 */
+	protected $requestObj;
+
+	/**
 	 * 视图实例对象
 	 *
-	 * @var [type]
+	 * @var object
 	 */
 	protected $view;
 
@@ -22,6 +28,9 @@ class Controller
 	 */
 	public function __construct()
 	{
+		//请求对象
+		$this->requestObj = new Request();
+		//视图
 		$this->view = new View();
 	}
 
