@@ -96,12 +96,12 @@ if (! function_exists('loadClass')) {
 		$names = explode('/', $name);
 		if (count($names) == 3) {
 			$group = strtolower($names[0]);
-			$model = ucfirst($names[1]);
-			$action = $names[2];
+			$model = strtolower($names[1]);
+			$action = ucfirst($names[2]);
 		} elseif (count($names) == 2) {
 			$group = strtolower(GROUP_NAME);
-			$model = ucfirst($names[0]);
-			$action = $names[1];
+			$model = strtolower($names[0]);
+			$action = ucfirst($names[1]);
 		} else {
 			return false;
 		}
