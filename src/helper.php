@@ -106,7 +106,7 @@ if (! function_exists('loadClass')) {
 			return false;
 		}
 		$class = sprintf('\\%s\\%s\\%s\\%s', $psr4, $group, $model, $action);
-		$class = basename($class);
+		//$class = basename($class);//TODO WIN系统需带上命名空间
 		$file = ROOT_PATH . sprintf('/%s/%s/%s/%s', strtolower($psr4), $group, $model, $action) . $ext;
 		if (! is_file($file)) {
 			return false;
